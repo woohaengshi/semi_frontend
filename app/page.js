@@ -1,3 +1,4 @@
+import Timer from '@/components/Timer';
 import { Flex, Text, Button } from '@radix-ui/themes';
 
 // function MyApp() {
@@ -13,6 +14,7 @@ export default function Home() {
   return (
     <main >
       {/* <MyApp /> */}
+      <Timer size={400} maxTime={60} />
     </main>
   );
 }
