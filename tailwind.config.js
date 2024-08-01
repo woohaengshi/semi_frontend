@@ -13,7 +13,7 @@ module.exports = {
       colors: {
         'main-purple': '#A19DEC',
         customLightBlue: '#DBDBFF',
-        customBlue: '#8274EA',
+        customBlue: '#6153B8',
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

@@ -15,27 +15,28 @@ const Timer = ({ size, maxTime }) => {
 
   useEffect(() => {
     let interval = null;
-  
+
     if (isActive) {
-      interval = setInterval(() => {
-        setTime((prevTime) => prevTime + 1);
-        
-        setLoadingTime((prevLoadingTime) => {
-          if (prevLoadingTime >= maxTime) {
-            setLoadingColor(getDarkerColor(loadingColor, colorDensity.current));
-            setCompleteColor(getDarkerColor(loadingColor, colorDensity.current));
-            colorDensity.current += 0.1;
-            return 0; // Reset loadTime
-          }
-          return prevLoadingTime + 1; 
-        });
-      }, 1000); // 1초마다 업데이트
+        interval = setInterval(() => {
+            setTime((prevTime) => prevTime + 1);
+
+            setLoadingTime((prevLoadingTime) => {
+                if (prevLoadingTime >= maxTime) {
+                    setLoadingColor(getDarkerColor(loadingColor, colorDensity.current));
+                    setCompleteColor(getDarkerColor(loadingColor, colorDensity.current));
+                    colorDensity.current = Math.min(colorDensity.current + 0.1, 1); // 최대 1로 제한
+                    return 0; // Reset loadTime
+                }
+                return prevLoadingTime + 1; 
+            });
+        }, 1000); // 1초마다 업데이트
     } else {
-      clearInterval(interval);
+        clearInterval(interval);
     }
-  
+
     return () => clearInterval(interval);
-  }, [isActive, loadingColor, maxTime]);
+}, [isActive, loadingColor, maxTime]);
+
 
   const handleToggle = () => setIsActive((prev) => !prev);
 
@@ -75,7 +76,7 @@ const Timer = ({ size, maxTime }) => {
             style={{ transition: 'stroke-dasharray 0.5s ease-in-out' }}
           />
         </svg>
-        <div className="absolute inset-0 flex items-center justify-center text-2xl font-bold text-gray-800">
+        <div className="absolute inset-0 flex items-center justify-center text-5xl font-bold text-gray-800">
           {formatTime(time)}
         </div>
       </div>
@@ -83,13 +84,13 @@ const Timer = ({ size, maxTime }) => {
       <Toggle.Root
         pressed={isActive}
         onPressedChange={handleToggle}
-        className="bg-white border-2 border-purple-500 text-customBlue px-4 py-2 rounded-2xl focus:outline-none transition-colors duration-300 hover:bg-purple-100 mb-4"
+        className="bg-white border-2 border-customLightBlue text-customBlue px-8 py-4 rounded-full focus:outline-none transition-colors duration-300 hover:bg-purple-50 mb-4"
       >
-        {isActive ? 'Pause' : 'Play'}
+        {isActive ? 'Pause' : 'Start'}
       </Toggle.Root>
 
-      <ColorPicker label="로딩 색상:" color={loadingColor} setColor={setLoadingColor} />
-      <ColorPicker label="완료 색상:" color={completeColor} setColor={setCompleteColor} />
+      {/* <ColorPicker label="로딩 색상:" color={loadingColor} setColor={setLoadingColor} />
+      <ColorPicker label="완료 색상:" color={completeColor} setColor={setCompleteColor} /> */}
     </div>
   );
 };
