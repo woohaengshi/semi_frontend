@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <main >
       {/* <MyApp /> */}
-      <Timer size={400} maxTime={60} />
+      <Timer size={400} maxTime={10} />
     </main>
   );
 }
