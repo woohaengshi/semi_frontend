@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* styles/globals.css */
+/* [data-state='on'] {
+  background-color: #4caf50; 
+  color: white;
+}
+
+[data-state='off'] {
+  background-color: #f44336;
+  color: white;
+} */
