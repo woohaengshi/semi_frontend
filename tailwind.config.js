@@ -7,14 +7,18 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Noto Sans KR', 'sans-serif'],
+      },
+      colors: {
+        'main-purple': '#A19DEC',
+        customLightBlue: '#DBDBFF',
+        customBlue: '#8274EA',
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
-      colors: {
-        customLightBlue: '#DBDBFF',
-        customBlue: '#8274EA',
       },
     },
   },

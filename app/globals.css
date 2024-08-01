@@ -1,14 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* styles/globals.css */
-/* [data-state='on'] {
-  background-color: #4caf50; 
-  color: white;
+header .tabItem, .tabLastItem {
+  position: relative;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  font-weight: 600;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
-[data-state='off'] {
-  background-color: #f44336;
-  color: white;
-} */
+.tabItem.active {
+  color: #7667DC;
+  font-weight: 700;
+}
+
+header .tabItem::after {
+  content: "·";
+  position: absolute;
+  top: 50%;
+  right: -0.75rem;
+  font-size: 1.25rem;
+  color: #BAB8F6;
+  transform: translateY(-50%);
+  cursor: default;
+}
+
+.tabItem.text-main-purple, .tabLastItem.text-main-purple {
+  color: #8274EA;
+}

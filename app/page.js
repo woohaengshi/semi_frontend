@@ -1,4 +1,4 @@
-import Timer from '@/components/Timer';
+import './globals.css';
 import { Flex, Text, Button } from '@radix-ui/themes';
 
 // function MyApp() {
@@ -13,8 +13,7 @@ import { Flex, Text, Button } from '@radix-ui/themes';
 export default function Home() {
   return (
     <main >
-      {/* <MyApp /> */}
-      {/* <Timer size={400} maxTime={10} /> */}
+
     </main>
   );
 }
