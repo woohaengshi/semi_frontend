@@ -9,11 +9,13 @@ const Header = () => {
   return (
     <header className="py-4 border-b-2 border-main-purple font-bold">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center px-4">
-        <div className="flex items-center mb-4 md:mb-0 font-bold text-xl">
-          우리들의 행복한 시간
+        <div className="flex items-center mb-4 md:mb-0">
+          <Link href="/">
+          <img src="/logo.png" alt="logo"/>
+          </Link>
         </div>
 
-        <div className="flex justify-center space-x-4 mb-4 md:mb-0">
+        <div className="sm:flex sm:justify-center space-x-4 mb-4 md:mb-0 hidden">
           <Link href="/timer">
             <h1 className={classNames(
                 'tabItem text-lg md:text-base',
@@ -34,7 +36,7 @@ const Header = () => {
           </Link>
         </div>
 
-        <div className="flex items-center space-x-4">
+        <div className="sm:flex sm:items-center space-x-4 hidden">
         <img src="/profile.png" alt="User Profile" className="h-8" />
         <div>
           <h1>홍길동</h1>

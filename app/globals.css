@@ -4,8 +4,19 @@
 @tailwind components;
 @tailwind utilities;
 
-main {
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
   font-family: "Noto Sans KR", sans-serif;
+}
+
+#root {
+  flex: 1;
 }
 
 header .tabItem, .tabLastItem {
