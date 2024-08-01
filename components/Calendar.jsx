@@ -26,37 +26,48 @@ const Calendar = () => {
         const days = [];
         const date = new Date(currentDate);
         date.setDate(1); // 현재 월의 첫 날로 설정
-    
+
         // 현재 월의 모든 날짜 수 계산
         const monthDays = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-    
+
         // 1일의 요일을 계산
         const firstDayOfWeek = date.getDay();
-    
-        // 첫 번째 날짜가 시작하는 요일에 맞춰 빈 칸 추가
+
+        // 첫 번째 행 추가: 빈 칸 처리
+        let row = [];
         for (let i = 0; i < firstDayOfWeek; i++) {
-            days.push(<div key={`empty-${i}`} className="p-1"></div>); // 빈 칸 추가
+            row.push(<td key={`empty-${i}`} className="p-1"></td>); // 빈 칸 추가
         }
-    
+
         // 현재 월의 모든 날짜 추가
         for (let day = 1; day <= monthDays; day++) {
             // 날짜를 두 자리 문자열로 포맷팅 (예: 01, 02, ..., 31)
             const formattedDay = String(day).padStart(2, '0'); 
-            
-            days.push(
-                <div
+
+            row.push(
+                <td
                     key={day}
                     className="cursor-pointer p-1 h-20 hover:bg-gray-200 border border-gray-300 text-center"
                     onClick={() => handleDateClick(day)} // 클릭 시 날짜 선택
                 >
                     {formattedDay}일 {/* 포맷팅된 날짜 표시 */}
-                </div>
+                </td>
             );
+
+            // 7일마다 새로운 행 추가
+            if ((day + firstDayOfWeek) % 7 === 0) {
+                days.push(<tr key={`row-${Math.floor((day + firstDayOfWeek) / 7)}`}>{row}</tr>);
+                row = []; // 새로운 행을 위해 초기화
+            }
         }
-    
+
+        // 마지막 행에 남은 날짜 추가
+        if (row.length > 0) {
+            days.push(<tr key={`row-last`}>{row}</tr>);
+        }
+
         return days;
     };
-    
 
     // 월 선택기 열림/닫힘 토글
     const toggleMonthPicker = () => {
@@ -153,16 +164,21 @@ const Calendar = () => {
                     </button>
                 </div>
                 {isMonthPickerOpen && renderMonthPicker()} {/* 월 선택기 렌더링 */}
-                <div className="grid grid-cols-7 gap-1 mb-2 bg-violet-100 border rounded-lg py-4"> {/* 요일 헤더 */}
-                    {['일', '월', '화', '수', '목', '금', '토'].map(day => (
-                        <div key={day} className="text-center font-bold">{day}</div>
-                    ))}
-                </div>
-                <div className="bg-white border rounded shadow-lg p-2"> {/* 날짜 그리드 */}
-                    <div className="grid grid-cols-7">
+                <table className="table-auto w-full mb-2 rounded-lg"> {/* 전체 테이블 */}
+                    <thead className="bg-violet-100 rounded-t-lg"> {/* 요일 헤더 */}
+                        <tr>
+                            {['일', '월', '화', '수', '목', '금', '토'].map((day, index) => (
+                                <th key={day} className={`text-center font-bold text-black p-4 ${index === 0 ? 'rounded-l-lg' : ''} ${index === 6 ? 'rounded-r-lg' : ''}`}>{day}</th> // 양끝 둥글게 처리
+                            ))}
+                        </tr>
+                    </thead>
+
+                    <tbody className="bg-white"> {/* 날짜 그리드 */}
+                        <tr><td className='py-5'></td></tr>
                         {renderDays()} {/* 날짜 렌더링 */}
-                    </div>
-                </div>
+                    </tbody>
+                </table>
+
             </div>
         </div>
     );
