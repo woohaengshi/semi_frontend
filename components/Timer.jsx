@@ -4,40 +4,38 @@
 import React, { useState, useEffect, useRef } from 'react';
 import * as Toggle from '@radix-ui/react-toggle';
 
-const Timer = ({size, maxTime}) => {
+const Timer = ({ size, maxTime }) => {
   const [isActive, setIsActive] = useState(false);
   const [time, setTime] = useState(0);
-  const radius = (size - 20) / 2; // 반지름
-  const [loadingColor, setLoadingColor] = useState('#8274EA'); // 기본 로딩 색상
-  const [completeColor, setCompleteColor] = useState('#8274EA'); // 완료 색상 변수
-  const colorDensity = useRef(0.1);
+  const [loadTime, setLoadingTime] = useState(0);
+  const radius = (size - 20) / 2;
+  const [loadingColor, setLoadingColor] = useState('#8274EA');
+  const [completeColor, setCompleteColor] = useState('#8274EA');
+  const colorDensity = useRef(0.01);
 
   useEffect(() => {
     let interval = null;
-
+  
     if (isActive) {
       interval = setInterval(() => {
-        setTime((prevTime) => {
-          if (prevTime < maxTime) {
-            return prevTime + 1; // 최대 시간 초과 시 0으로 리셋
-          } else {
+        setTime((prevTime) => prevTime + 1);
+        
+        setLoadingTime((prevLoadingTime) => {
+          if (prevLoadingTime >= maxTime) {
             setLoadingColor(getDarkerColor(loadingColor, colorDensity.current));
+            setCompleteColor(getDarkerColor(loadingColor, colorDensity.current));
             colorDensity.current += 0.1;
-            return 0; // 리셋 시 색상도 초기화
+            return 0; // Reset loadTime
           }
+          return prevLoadingTime + 1; 
         });
-
-        // 시간 초과 시 색상 초기화
-        if (time >= maxTime) {
-          setLoadingColor('#8274EA'); // 기본 색상으로 리셋
-        }
-      }, 1000);
+      }, 1000); // 1초마다 업데이트
     } else {
       clearInterval(interval);
     }
-
-    return () => clearInterval(interval); // 컴포넌트 언마운트 시 클린업
-  }, [isActive, time]);
+  
+    return () => clearInterval(interval);
+  }, [isActive, loadingColor, maxTime]);
 
   const handleToggle = () => setIsActive((prev) => !prev);
 
@@ -47,9 +45,8 @@ const Timer = ({size, maxTime}) => {
     return `${minutes}:${seconds}`;
   };
 
-  const progress = (time / maxTime) * 100; // 진행률 계산
+  const progress = (loadTime / maxTime) * 100;
 
-  // 색상을 점점 진하게 만드는 함수
   const getDarkerColor = (hex, factor) => {
     let r = parseInt(hex.slice(1, 3), 16);
     let g = parseInt(hex.slice(3, 5), 16);
