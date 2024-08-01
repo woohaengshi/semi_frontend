@@ -15,27 +15,28 @@ const Timer = ({ size, maxTime }) => {
 
   useEffect(() => {
     let interval = null;
-  
+
     if (isActive) {
-      interval = setInterval(() => {
-        setTime((prevTime) => prevTime + 1);
-        
-        setLoadingTime((prevLoadingTime) => {
-          if (prevLoadingTime >= maxTime) {
-            setLoadingColor(getDarkerColor(loadingColor, colorDensity.current));
-            setCompleteColor(getDarkerColor(loadingColor, colorDensity.current));
-            colorDensity.current += 0.1;
-            return 0; // Reset loadTime
-          }
-          return prevLoadingTime + 1; 
-        });
-      }, 1000); // 1초마다 업데이트
+        interval = setInterval(() => {
+            setTime((prevTime) => prevTime + 1);
+
+            setLoadingTime((prevLoadingTime) => {
+                if (prevLoadingTime >= maxTime) {
+                    setLoadingColor(getDarkerColor(loadingColor, colorDensity.current));
+                    setCompleteColor(getDarkerColor(loadingColor, colorDensity.current));
+                    colorDensity.current = Math.min(colorDensity.current + 0.1, 1); // 최대 1로 제한
+                    return 0; // Reset loadTime
+                }
+                return prevLoadingTime + 1; 
+            });
+        }, 1000); // 1초마다 업데이트
     } else {
-      clearInterval(interval);
+        clearInterval(interval);
     }
-  
+
     return () => clearInterval(interval);
-  }, [isActive, loadingColor, maxTime]);
+}, [isActive, loadingColor, maxTime]);
+
 
   const handleToggle = () => setIsActive((prev) => !prev);
 
