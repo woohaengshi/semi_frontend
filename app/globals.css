@@ -4,6 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
+main {
+  font-family: "Noto Sans KR", sans-serif;
+}
+
 header .tabItem, .tabLastItem {
   position: relative;
   padding: 0.5rem 1rem;
