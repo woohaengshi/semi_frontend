@@ -1,3 +1,4 @@
+import './globals.css';
 import { Flex, Text, Button } from '@radix-ui/themes';
 
 // function MyApp() {
@@ -11,8 +12,8 @@ import { Flex, Text, Button } from '@radix-ui/themes';
 
 export default function Home() {
   return (
-    <main >
-      {/* <MyApp /> */}
-    </main>
+    <>
+    
+    </>
   );
 }
